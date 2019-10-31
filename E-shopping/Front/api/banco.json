@@ -1,0 +1,197 @@
+{
+    "produtos":[
+        {
+            "Id": 1,
+            "Name": "Camisa Polo Edição Preto",
+            "CategoryId": 1,
+            "PriceValue": 25.00,
+            "Category":{
+                "Name":"Camisas",
+                "Active": true
+            },
+            "imageId":1,
+            "image": "http://localhost:1337/cadastro/image/product1.jpg"
+        },
+        {
+            "Id": 2,
+            "Name": "Camisa Polo Branca",
+            "CategoryId": 1,
+            "PriceValue": 35.00,
+            "Category":{
+                "Name":"Camisas",
+                "Active": true
+            },
+            "imageId":2,
+            "image": "http://localhost:1337/cadastro/image/product2.jpg"
+        },
+        {
+            "Id": 3,
+            "Name": "Camisa Polo Edição Verde",
+            "CategoryId": 1,
+            "PriceValue": 45.00,
+            "Category":{
+                "Name":"Camisas",
+                "Active": true
+            },
+            "imageId":3,
+            "image": "http://localhost:1337/cadastro/image/product3.jpg"
+        },
+        {
+            "Id": 4,
+            "Name": "Camisa Polo Edição Vermelha",
+            "CategoryId": 1,
+            "PriceValue": 25.00,
+            "Category":{
+                "Name":"Camisas",
+                "Active": true
+            },
+            "imageId":3,
+            "image": "http://localhost:1337/cadastro/image/product4.jpg"
+        }
+    ],
+    "categorys":[
+        {
+            "Id":1,
+            "Name":"Masculino",
+            "IsActive": true,
+            "SubItems":[
+                {
+                    "Id":1,
+                    "Name":"Camisas"
+                },
+                {
+                    "Id":2,
+                    "Name":"Camisetas"
+                },
+                {
+                    "Id":3,
+                    "Name": "Calças"
+                }
+            ]
+        },
+        {
+            "Id":2,
+            "Name":"Feminino",
+            "IsActive": true,
+            "SubItems":[
+                {
+                    "Id":1,
+                    "Name":"Vestidos"
+                },
+                {
+                    "Id":2,
+                    "Name":"Camisetas"
+                },
+                {
+                    "Id":3,
+                    "Name": "Calças"
+                }
+            ]
+        },
+        {
+            "Id":3,
+            "Name":"Infantil",
+            "IsActive": true,
+            "SubItems":[
+                {
+                    "Id":1,
+                    "Name":"Camisas"
+                },
+                {
+                    "Id":2,
+                    "Name":"Camisetas"
+                },
+                {
+                    "Id":3,
+                    "Name": "Calças"
+                }
+            ]
+        },
+        {
+            "Id":4,
+            "Name":"Bolsas",
+            "IsActive": true,
+            "SubItems":[]
+        }
+    ],
+    "countryShipping":[
+        {
+            "Id": 1024,
+            "Name": "Brasil",
+            "Regions": [
+                {
+                    "CountryId": 1024,
+                    "Id": 1,
+                    "Name": "Rio Grande do Sul",
+                    "Sigle": "RS",
+                    "CepNumber": "89110000",
+                    "TaxShippingValue": 15.00
+                },
+                {
+                    "CountryId": 1024,
+                    "Id": 2,
+                    "Name": "Santa Catarina",
+                    "Sigle": "SC",
+                    "CepNumber": "90150130",
+                    "TaxShippingValue": 10.00
+                }
+            ]
+        },
+        {
+            "Id": 65,
+            "Name": "EUA",
+            "Regions": [
+                {
+                    "CountryId": 65,
+                    "Id": 3,
+                    "Name": "New Iork",
+                    "Sigle": "NI",
+                    "CepNumber": "",
+                    "TaxShippingValue": 55.00
+                },
+                {
+                    "CountryId": 65,
+                    "Id": 4,
+                    "Name": "Washington",
+                    "Sigle": "WA",
+                    "CepNumber": "",
+                    "TaxShippingValue": 105.00
+                }
+            ]
+        }
+    ],
+    "regionByCep":[
+        {
+            "CountryId": 65,
+            "Id": 3,
+            "Name": "New Iork",
+            "Sigle": "NI",
+            "CepNumber": "",
+            "TaxShippingValue": 55.00
+        },
+        {
+            "CountryId": 65,
+            "Id": 4,
+            "Name": "Washington",
+            "Sigle": "WA",
+            "CepNumber": "",
+            "TaxShippingValue": 105.00
+        },
+        {
+            "CountryId": 1024,
+            "Id": 1,
+            "Name": "Rio Grande do Sul",
+            "Sigle": "RS",
+            "CepNumber": "89110000",
+            "TaxShippingValue": 15.00
+        },
+        {
+            "CountryId": 1024,
+            "Id": 2,
+            "Name": "Santa Catarina",
+            "Sigle": "SC",
+            "CepNumber": "90150130",
+            "TaxShippingValue": 10.00
+        }
+    ]
+}
