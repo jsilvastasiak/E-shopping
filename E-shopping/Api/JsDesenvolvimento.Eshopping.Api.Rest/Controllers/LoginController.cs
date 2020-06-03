@@ -1,4 +1,5 @@
 ﻿using JsDesenvolvimento.Eshopping.Api.Authentication;
+using JsDesenvolvimento.Eshopping.Api.Authentication.Impl;
 using JsDesenvolvimento.Eshopping.Api.Authentication.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,11 +24,11 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Autenticar([FromBody] UsuarioAplicacao value, [FromServices] IAuthenticateService authenticate)
+        public IActionResult Autenticar([FromBody] LoginForm value, [FromServices] IAuthenticateService authenticate)
         {
             try
             {
-                var infoLogin = authenticate.Authenticate(value.Login, value.Senha);
+                var infoLogin = authenticate.Authenticate(value.login, value.senha);
                 return Ok(infoLogin);
             }
             catch (Exception ex)
@@ -35,5 +36,11 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
                 return BadRequest(ex.Message);
             }
         }
+    }
+
+    public class LoginForm
+    {
+        public string login { get; set; }
+        public string senha { get; set; }
     }
 }

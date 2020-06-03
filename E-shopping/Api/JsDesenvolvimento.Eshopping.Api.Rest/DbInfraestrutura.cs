@@ -40,6 +40,8 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest
             SqlMapper.RemoveTypeMap(typeof(bool));
             SqlMapper.AddTypeHandler(typeof(bool), new BoolSqlMapper());
 
+            builder.Register<DapperExtensions.Sql.ISqlGenerator>(a => new DapperExtensions.Sql.SqlGeneratorImpl(config));
+
             builder.Register<IDbProvider>(ctx => new DefaultPostgresqlDbProvider(appSettings.DBProviderFactory)).AsImplementedInterfaces().SingleInstance();
             //Conexão com banco
             builder.Register<IDbConnectionFactory>(ctx => new DefaultConnectionFactory(ctx.Resolve<IDbProvider>(), appSettings.ConnectionString)).AsImplementedInterfaces();

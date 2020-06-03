@@ -21,16 +21,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Authentication.Impl
 
         public InformacoesLogin Authenticate(string username, string password)
         {
-            var user = new UsuarioAplicacao()
-            {
-                Codigo = 1,
-                Login = "Admin"
-            };
-
-            user.Roles = new List<string>();
-            user.Roles.Add("Admin");
-
-            if (user == null)
+            if (username != "Marlei" || password != "1234")
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -39,8 +30,9 @@ namespace JsDesenvolvimento.Eshopping.Api.Authentication.Impl
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Login),
-                    new Claim("Admin", user.Roles.First())
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim("propietario", "3"),
+                    new Claim("loja", "1")
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -50,7 +42,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Authentication.Impl
             return new InformacoesLogin()
             {
                 TokenAssinado = tokenHandler.WriteToken(token),
-                Login = user.Login
+                Login = username
             };
         }
     }

@@ -20,6 +20,9 @@ using JsDesenvolvimento.Eshopping.Api.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using JsDesenvolvimento.Eshopping.Api.Authentication.Impl;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using JsDesenvolvimento.Eshopping.Api.Authentication.Model;
 
 namespace JsDesenvolvimento.Eshopping.Api.Rest
 {
@@ -43,6 +46,8 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest
         {
             // Add services to the collection
             services.AddOptions();
+            services.AddMediatR(typeof(Logic.DIModule).GetType().Assembly);
+            
             services.AddMvc(config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -53,7 +58,10 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest
 
             services.AddAuthenticationConfig(Configuration);
             services.AddSingleton<IAuthenticateService>(a => new DefaultAuthenticateService(a.GetRequiredService<IConfiguration>()));
-                
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUserRef>(a => new UsuarioAplicacao(a.GetRequiredService<IHttpContextAccessor>()));
+
             // Create a container-builder and register dependencies
             var builder = new ContainerBuilder();
 
@@ -73,6 +81,19 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            // Mediator itself
+            builder
+                .RegisterType<Mediator>()
+                .As<IMediator>()
+                .InstancePerLifetimeScope();
+
+            // request & notification handlers
+            builder.Register<ServiceFactory>(context =>
+            {
+                var c = context.Resolve<IComponentContext>();
+                return t => c.Resolve(t);
+            });
+
             builder.RegistrarAutofacModulos();
             builder.ConfigurarProviderBanco(_appSettings);
         }
