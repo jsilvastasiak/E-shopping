@@ -77,12 +77,11 @@
     
     import MasterHeader from '../components/MasterHeader.vue';
     import CartGrid from '../components/CartGrid.vue';
-    import Cart from '../components/Cart';
     import Client from '../components/ApiClient.vue';
 
     export default {
-        inject: ['api'],
-        mixins: [Cart,Client],
+        inject: ['api','cart'],
+        mixins: [Client],
         components:{
             MasterHeader,
             CartGrid
@@ -127,8 +126,8 @@
                 }
             },
             GetSubTotal(){
-                if(this.GetAllItems()){
-                    return this.GetAllItems().reduce(function(value, next){
+                if(this.cart.GetAllItems()){
+                    return this.cart.GetAllItems().reduce(function(value, next){
                         return value + next.Price;
                     },0);
                 }else{
@@ -144,7 +143,7 @@
             },
             InitBuy(){
                 var produtos = [];
-                this.GetAllItems().forEach(function(el){
+                this.cart.GetAllItems().forEach(function(el){
                     produtos.push({
                         quantidade: el.Quantity,
                         valorCompra: el.Price,
@@ -160,7 +159,7 @@
 
                 this.Post('/products/finalizarCompra', request).then(response => {
                     if(response.compraPendente.idcompra){
-                        this.ClearCar();
+                        this.cart.ClearCar();
                     }
                 });
             }

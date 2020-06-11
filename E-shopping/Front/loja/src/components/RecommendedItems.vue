@@ -47,11 +47,10 @@
 
 <script>
     import Client from '../components/ApiClient.vue';
-    import Cart from '../components/Cart.vue';
-
+    
     export default {
-        mixins: [Cart, Client],
-        inject: ['api'],
+        mixins: [Client],
+        inject: ['api','cart'],
         data(){
             return {
                 produtosActive: [],
@@ -79,14 +78,14 @@
                 });
             },
             AddItem(item){
-                var newItem = this.CreateItem();
+                var newItem = this.cart.CreateItem();
                 newItem.IdProduto = item.idproduto;
                 newItem.Price = item.precounitario;
                 newItem.Image = item.imagem;
                 newItem.Name = item.nome;
                 newItem.Quantity = 1;
 
-                this.AddToCart(newItem);
+                this.cart.AddToCart(newItem);
             }
         },
         created(){
