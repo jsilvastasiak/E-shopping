@@ -1,10 +1,11 @@
-﻿using System;
+﻿using JsDesenvolvimento.Data.Repository;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace JsDesenvolvimento.Eshopping.Api.Data.Operacao
 {
-    interface ICompraRepository
+    public interface ICompraRepository : IDefaultRepository<DBModel.Compra>
     {
     }
 }

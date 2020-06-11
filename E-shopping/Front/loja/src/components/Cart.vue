@@ -1,16 +1,14 @@
 <script>
     export default {
+        inject: ['cart'],
         data(){
-            return {
-                Cart:{
-                    Items: []
-                }
-            };
+            return {};
         },
         methods:{
             CreateItem(){
                 return {
                     Id: Number,
+                    IdProduto: Number,
                     Name: String,
                     Price: Number,
                     Quantity: Number,
@@ -18,24 +16,33 @@
                 };
             },
             AddToCart(item){
-                this.Cart.Items.push(item);
+                item.Id = this.cart.items.length + 1;
+                this.cart.items.push(item);
                 this._saveStorage();
+                console.log(item);
             },
             RemoveCartItem(item){
-                this.Cart.Items = this.Cart.Items.filter(function(sel){
+                this.cart.items = this.cart.items.filter(function(sel){
                     return sel.Id !== item.Id;
                 });
                 this._saveStorage();
             },
+            GetAllItems(){
+                return this.cart.items;
+            },
+            ClearCar(){
+                this.cart.items = [];
+                this._saveStorage();
+            },
             _saveStorage(){
-                const parsed = JSON.stringify(this.Cart);
+                const parsed = JSON.stringify(this.cart);
                 localStorage.setItem('Cart', parsed);
             }
         },
         mounted(){
             if(localStorage.getItem("Cart")){
                 try {
-                    this.Cart = JSON.parse(localStorage.getItem("Cart"));
+                    this.cart = JSON.parse(localStorage.getItem("Cart"));
                 } catch (error) {
                     localStorage.removeItem("Cart");
                 }

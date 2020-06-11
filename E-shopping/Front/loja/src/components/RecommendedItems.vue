@@ -10,10 +10,10 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img :src="produto.image" alt="" />
-                                        <h2 v-text="'R$' + produto.PriceValue"></h2>
-                                        <p v-text="produto.Name"></p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Adicionar</a>
+                                        <img :src="produto.imagem" alt="" />
+                                        <h2 v-text="'R$' + produto.precounitario"></h2>
+                                        <p v-text="produto.nome"></p>
+                                        <a href="#" class="btn btn-default add-to-cart" v-on:click.prevent.stop="AddItem(produto)"><i class="fa fa-shopping-cart"></i>Adicionar</a>
                                     </div>
                                 </div>
                             </div>
@@ -24,10 +24,10 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img :src="produto.image" alt="" />
-                                        <h2 v-text="'R$' + produto.PriceValue"></h2>
-                                        <p v-text="produto.Name"></p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Adicionar</a>
+                                        <img :src="produto.imagem" alt="" />
+                                        <h2 v-text="'R$' + produto.precounitario"></h2>
+                                        <p v-text="produto.nome"></p>
+                                        <a href="#" class="btn btn-default add-to-cart" v-on:click.prevent.stop="AddItem(produto)"><i class="fa fa-shopping-cart"></i>Adicionar</a>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +46,12 @@
 </template>
 
 <script>
+    import Client from '../components/ApiClient.vue';
+    import Cart from '../components/Cart.vue';
+
     export default {
+        mixins: [Cart, Client],
+        inject: ['api'],
         data(){
             return {
                 produtosActive: [],
@@ -56,8 +61,7 @@
         methods: {
             GetProducts(){
                 // GET /someUrl
-                this.$http.get('http://localhost:3000/produtos')
-                .then(response => response.json())
+                this.Get('/products', {})
                 .then(response => {
                     if(response.length > 3){
                         this.produtosActive = response.slice(0,3);
@@ -65,8 +69,24 @@
                     }
                     else
                         this.produtosActive = response;
-                    
+
+                    this.produtos.forEach(element => {
+                        element.imagem = this.api.diretorioImagens + element.imagem + "?" + this.api.sas;
+                    });
+                    this.produtosActive.forEach(element => {
+                        element.imagem = this.api.diretorioImagens + element.imagem + "?" + this.api.sas;
+                    });
                 });
+            },
+            AddItem(item){
+                var newItem = this.CreateItem();
+                newItem.IdProduto = item.idproduto;
+                newItem.Price = item.precounitario;
+                newItem.Image = item.imagem;
+                newItem.Name = item.nome;
+                newItem.Quantity = 1;
+
+                this.AddToCart(newItem);
             }
         },
         created(){

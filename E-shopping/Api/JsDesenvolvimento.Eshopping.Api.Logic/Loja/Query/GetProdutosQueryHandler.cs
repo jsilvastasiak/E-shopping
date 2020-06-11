@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using JsDesenvolvimento.Eshopping.Api.Data.Loja.Model;
 
 namespace JsDesenvolvimento.Eshopping.Api.Logic.Loja.Query
 {
-    public class GetProdutosQueryHandler : IRequestHandler<GetProdutosQuery, IEnumerable<Produto>>
+    public class GetProdutosQueryHandler : IRequestHandler<GetProdutosQuery, IEnumerable<ProdutoDto>>
     {
         private IDbConnectionFactory DbConnectionFactory { get; set; }
         private IDbContextFactory DbContextFactory { get; set; }
@@ -23,20 +24,20 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Loja.Query
             this.DbContextFactory = contextFactory;
         }
 
-        public Task<IEnumerable<Produto>> Handle(GetProdutosQuery request, CancellationToken cancellationToken)
+        public Task<IEnumerable<ProdutoDto>> Handle(GetProdutosQuery request, CancellationToken cancellationToken)
         {
             using(var ctx = this.DbContextFactory.NewContext())
             {
                 var repo = ctx.AcquireRepository<IProdutoRepository>();
 
                 IPredicateGroup filtros = Predicates.Group(GroupOperator.And,
-                     Predicates.Field<Produto>(a => a.idpropietario, Operator.Eq, request.Filters.idpropietario)
-                    , Predicates.Field<Produto>(a => a.idloja, Operator.Eq, request.Filters.idloja)
-                    , Predicates.Field<Produto>(a => a.situacao, Operator.Eq, "A")
+                     Predicates.Field<ProdutoDto>(a => a.idpropietario, Operator.Eq, request.User.Loja.Propietario)
+                    , Predicates.Field<ProdutoDto>(a => a.idloja, Operator.Eq, request.User.Loja.Loja)
+                    , Predicates.Field<ProdutoDto>(a => a.situacao, Operator.Eq, "A")
                 );
 
-                var produtos = repo.Fetch(filtros, cancellationToken).Result;
-                return Task.FromResult<IEnumerable<Produto>>(produtos);
+                var produtos = repo.FetchDto(filtros, cancellationToken).Result;
+                return Task.FromResult<IEnumerable<ProdutoDto>>(produtos);
             }
         }
     }

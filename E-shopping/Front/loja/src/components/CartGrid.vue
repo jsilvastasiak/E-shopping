@@ -45,9 +45,10 @@
 </template>
 
 <script>
+    import Cart from '../components/Cart.vue';
 
     export default {
-        inject: ['Cart'],
+        mixins: [Cart],
         data(){
             return{
                 CartItems: []
@@ -56,7 +57,7 @@
         methods: {
             RemoveItem(selected){
                 this.RemoveCartItem(selected);
-                this.CartItems = this.Cart.Items;
+                this.CartItems = this.GetAllItems();
             },
             SetQuantity(item, value){
                 item.Quantity = parseInt(item.Quantity) + value;
@@ -66,7 +67,7 @@
             }
         },
         mounted(){
-            this.CartItems = this.Cart.Items;
+            this.CartItems = this.GetAllItems();
         }
     }
 </script>

@@ -1,6 +1,5 @@
 ﻿using JsDesenvolvimento.Eshopping.Api.Authentication;
 using JsDesenvolvimento.Eshopping.Api.Data.Loja.DBModel;
-using JsDesenvolvimento.Eshopping.Api.Data.Loja.Model;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,15 +7,15 @@ using System.Text;
 
 namespace JsDesenvolvimento.Eshopping.Api.Logic.Loja.Query
 {
-    public class GetProdutosQuery : IRequest<IEnumerable<ProdutoDto>>
+    public class GetCategoriasQuery : IRequest<IEnumerable<Categoria>>
     {
-        public GetProdutosQuery(ProdutoDto produto, IUserRef userRef)
+        public GetCategoriasQuery(Categoria request, IUserRef userRef)
         {
-            this.Filters = produto;
+            this.Request = request;
             this.User = userRef;
         }
 
-        public ProdutoDto Filters { get; }
+        public Categoria Request { get; set; }
         public IUserRef User { get; private set; }
     }
 }

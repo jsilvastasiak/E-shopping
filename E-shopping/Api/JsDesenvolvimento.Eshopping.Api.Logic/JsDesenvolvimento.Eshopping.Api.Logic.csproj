@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Loja\Cqrs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\JsDesenvolvimento.Eshopping.Api.Authentication\JsDesenvolvimento.Eshopping.Api.Authentication.csproj" />
     <ProjectReference Include="..\JsDesenvolvimento.Eshopping.Api.Data\JsDesenvolvimento.Eshopping.Api.Data.csproj" />
   </ItemGroup>

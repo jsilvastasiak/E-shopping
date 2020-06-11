@@ -62,7 +62,7 @@
                                         <li>Frete<span v-text='"R$ " + costs.TaxShippingValue'></span></li>
                                         <li>Total<span v-text='"R$ " + GetTotal()'></span></li>
                                     </ul>
-                                        <a class="btn btn-default check_out" href="#/checkout">Finalizar Compra</a>
+                                        <a href="#" class="btn btn-default check_out" v-on:click.prevent.stop="InitBuy()">Finalizar Compra</a>
                                 </div>
                             </div>
                         </div>
@@ -75,11 +75,14 @@
 
 <script>
     
-    import MasterHeader from '../components/MasterHeader.vue'
-    import CartGrid from '../components/CartGrid.vue'
+    import MasterHeader from '../components/MasterHeader.vue';
+    import CartGrid from '../components/CartGrid.vue';
+    import Cart from '../components/Cart';
+    import Client from '../components/ApiClient.vue';
 
     export default {
-        inject: ['api','Cart'],
+        inject: ['api'],
+        mixins: [Cart,Client],
         components:{
             MasterHeader,
             CartGrid
@@ -98,13 +101,7 @@
         },
         methods:{
             GetCountry(){    
-                this.$http.get(this.api.baseUrl + '/countryShipping')
-                .then(response => response.json())
-                .then(response => {
-                    this.country = response;
-                    if(this.country.length === 1)
-                        this.countryCode = this.country[0].Id;
-                });
+                //Precisa fazer uma integração com correios talvez
             },
             GetRegion(){
                 let countryCodeSelected = this.countryCode;
@@ -130,17 +127,42 @@
                 }
             },
             GetSubTotal(){
-                return this.cart.Items.reduce(function(value, next){
-                    return value + next.Price;
-                },0);
+                if(this.GetAllItems()){
+                    return this.GetAllItems().reduce(function(value, next){
+                        return value + next.Price;
+                    },0);
+                }else{
+                    return 0;
+                }
             },
             GetTotal(){
                 return this.GetSubTotal() + this.costs.TaxShippingValue;
             },
             ResetRegion(){
-                console.log("Passou aqui");
                 this.regionCode = undefined;
                 this.cepNumber = undefined;
+            },
+            InitBuy(){
+                var produtos = [];
+                this.GetAllItems().forEach(function(el){
+                    produtos.push({
+                        quantidade: el.Quantity,
+                        valorCompra: el.Price,
+                        idproduto: el.IdProduto
+                    });
+                });
+                var request = {
+                    Produtos: produtos,
+                    Comprador: {
+                        idpessoa: 1
+                    }
+                };
+
+                this.Post('/products/finalizarCompra', request).then(response => {
+                    if(response.compraPendente.idcompra){
+                        this.ClearCar();
+                    }
+                });
             }
         },
         watch:{

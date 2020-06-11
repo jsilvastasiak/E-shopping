@@ -2,12 +2,18 @@
 using JsDesenvolvimento.Eshopping.Api.Authentication;
 using JsDesenvolvimento.Eshopping.Api.Data.Loja;
 using JsDesenvolvimento.Eshopping.Api.Data.Loja.DBModel;
+using JsDesenvolvimento.Eshopping.Api.Data.Loja.Model;
+using JsDesenvolvimento.Eshopping.Api.Data.Pessoa.DBModel;
+using JsDesenvolvimento.Eshopping.Api.Logic.Loja.Cqrs;
+using JsDesenvolvimento.Eshopping.Api.Logic.Loja.Model;
 using JsDesenvolvimento.Eshopping.Api.Logic.Loja.Query;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,10 +36,12 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get([FromBody]Produto produtoRequest, CancellationToken cancellationToken)
+        public ActionResult<IEnumerable<string>> Get(CancellationToken cancellationToken)
         {
             try
             {
+                var produtoRequest = new ProdutoDto();
+
                 var query = new GetProdutosQuery(produtoRequest, this.UserRef);
                 var results = this.Mediator.Send(query).Result;
                 return Ok(results);
@@ -42,6 +50,40 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
             {
                 return BadRequest(new { Mensagem = ex.Message });
             }
+        }
+
+        [HttpPost("finalizarCompra")]
+        public ActionResult<FinalizarCompraResponse> FinalizarCompra(CancellationToken cancellationToken)
+        {
+            try
+            {
+                Carrinho carrinho = null;
+                using (var reader = new StreamReader(this.Request.Body))
+                {
+                    string json = reader.ReadToEnd();
+                    carrinho = JsonConvert.DeserializeObject<Carrinho>(json);
+                }
+
+                var produtoRequest = new FinalizarCompraRequest()
+                {
+                    ProdutosCompra = carrinho.Produtos,
+                    Comprador = carrinho.Comprador
+                };
+
+                var query = new FinalizarCompraCommand(produtoRequest, this.UserRef);
+                var results = this.Mediator.Send(query).Result;
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
+
+        public class Carrinho
+        {
+            public IList<ProdutoCompradoDto> Produtos { get; set; }
+            public Pessoa Comprador { get; set; }
         }
     }
 }

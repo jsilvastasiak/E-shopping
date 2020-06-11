@@ -13,30 +13,15 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(IRequest<>).Assembly)
-                .Where(t => t.IsClosedTypeOf(typeof(IRequest<>)))
-                .AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(this.ThisAssembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<>))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
 
-            builder
-                .RegisterAssemblyTypes(typeof(IRequestHandler<>).Assembly)
-                .Where(t => t.IsClosedTypeOf(typeof(IRequestHandler<>)))
-                .AsImplementedInterfaces();
-
-            builder
-                .RegisterAssemblyTypes(typeof(IRequestHandler<,>).Assembly)
-                .Where(t => t.IsClosedTypeOf(typeof(IRequestHandler<,>)))
-                .AsImplementedInterfaces();
-
-            //builder.RegisterAssemblyTypes(this.ThisAssembly)
-            //       .AsClosedTypesOf(typeof(IRequest<>))
-            //       .AsImplementedInterfaces()
-            //       .InstancePerLifetimeScope();
-
-            //builder.RegisterAssemblyTypes(this.ThisAssembly)
-            //    .AsClosedTypesOf(typeof(IRequestHandler<,>))
-            //    .AsClosedTypesOf(typeof(IRequestHandler<>))
-            //    .AsImplementedInterfaces()
-            //    .InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(this.ThisAssembly)
+                .AsClosedTypesOf(typeof(IRequestHandler<,>))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
         }
     }
 }

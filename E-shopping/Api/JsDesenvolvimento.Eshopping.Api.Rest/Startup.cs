@@ -46,7 +46,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest
         {
             // Add services to the collection
             services.AddOptions();
-            services.AddMediatR(typeof(Logic.DIModule).GetType().Assembly);
+            services.AddMediatR(typeof(Startup).Assembly);
             
             services.AddMvc(config =>
             {
@@ -55,6 +55,13 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest
                                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", policy =>
+            {
+                policy.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             services.AddAuthenticationConfig(Configuration);
             services.AddSingleton<IAuthenticateService>(a => new DefaultAuthenticateService(a.GetRequiredService<IConfiguration>()));
@@ -112,6 +119,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest
             }
 
             app.UseAuthentication();
+            app.UseCors("MyPolicy");
             app.UseMvc();
             app.UseHttpsRedirection();
         }

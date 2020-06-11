@@ -13,6 +13,14 @@ CREATE SEQUENCE pessoa_idpessoa_seq
     START WITH 1
     NO CYCLE
     CACHE 1;
+
+CREATE SEQUENCE compra_idcompra_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 8500001
+    START WITH 1
+    NO CYCLE
+    CACHE 1;
 	
 create domain sit_registro as varchar(1)
 default 'A'
@@ -130,18 +138,15 @@ create table pessoa(
 );
 
 create table compra(
-	idcompra integer not null,
+	idcompra integer not null default nextval('compra_idcompra_seq'),
 	idloja integer not null,
 	idpropietario integer not null,
 	idpessoa integer not null,
-	idproduto integer not null,
-	quantidade integer not null,
-	valor decimal(17,2) not null,
 	situacao sit_compra,
 	dataCompra date not null,
-	primary key (idcompra,idloja,idpropietario,idpessoa,idproduto),
-	foreign key (idloja,idpropietario,idproduto) references produto(idloja,idpropietario,idproduto),
-	foreign key (idpessoa) references pessoa(idpessoa)	
+	primary key (idcompra),
+	foreign key (idpessoa) references pessoa(idpessoa),
+	foreign key (idloja,idpropietario) references loja(idloja,idpropietario)
 );
 
 

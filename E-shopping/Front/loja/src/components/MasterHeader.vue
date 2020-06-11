@@ -149,9 +149,6 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="404.html">404</a>
-                </li>
-                <li>
                   <a href="#/contact">Contato</a>
                 </li>
               </ul>

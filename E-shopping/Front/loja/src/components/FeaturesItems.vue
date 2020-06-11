@@ -5,15 +5,15 @@
             <div class="product-image-wrapper">
                 <div class="single-products">
                     <div class="productinfo text-center">
-                        <img :src='produto.image' alt="Camisa" />
-                        <h2 v-text='"R$" + produto.PriceValue'></h2>
-                        <p v-text='produto.Name'></p>
+                        <img :src='produto.imagem' alt="Camisa" />
+                        <h2 v-text='"R$" + produto.precounitario'></h2>
+                        <p v-text='produto.nome'></p>
                         <a href="#" class="btn btn-default add-to-cart" v-on:click.prevent.stop="AddItem(produto)"><i class="fa fa-shopping-cart"></i>Adicionar</a>
                     </div>
                     <div class="product-overlay">
                         <div class="overlay-content">
-                            <h2 v-text="'R$' + produto.PriceValue"></h2>
-                            <p v-text="produto.Name"></p>
+                            <h2 v-text="'R$' + produto.precounitario"></h2>
+                            <p v-text="produto.nome"></p>
                             <a href="#" class="btn btn-default add-to-cart" v-on:click.prevent.stop="AddItem(produto)"><i class="fa fa-shopping-cart"></i>Adicionar</a>
                         </div>
                     </div>
@@ -30,10 +30,12 @@
 </template>
 
 <script>
-    import Cart from '../components/Cart.vue'
+    import Cart from '../components/Cart.vue';
+    import Client from '../components/ApiClient.vue'
 
     export default {
-        mixins: [Cart],
+        mixins: [Cart, Client],
+        inject: ['api'],
         data(){
             return {
                 produtos: []
@@ -42,18 +44,20 @@
         methods: {
             GetProducts(){
                 // GET /someUrl
-                this.$http.get('http://localhost:3000/produtos')
-                .then(response => response.json())
+                this.Get('/products', {})
                 .then(response => {
                     this.produtos = response;
+                    this.produtos.forEach(element => {
+                        element.imagem = this.api.diretorioImagens + element.imagem + "?" + this.api.sas;
+                    });
                 });
             },
             AddItem(item){
                 var newItem = this.CreateItem();
-                newItem.Id = item.Id;
-                newItem.Price = item.PriceValue;
-                newItem.Image = item.image;
-                newItem.Name = item.Name;
+                newItem.IdProduto = item.idproduto;
+                newItem.Price = item.precounitario;
+                newItem.Image = item.imagem;
+                newItem.Name = item.nome;
                 newItem.Quantity = 1;
 
                 this.AddToCart(newItem);
