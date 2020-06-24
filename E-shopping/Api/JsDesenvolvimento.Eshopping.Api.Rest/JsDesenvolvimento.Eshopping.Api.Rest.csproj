@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <Reference Include="JsDesenvolvimento.Data">
-      <HintPath>..\..\..\..\JsDesenvolvimento.Data\bin\Debug\netcoreapp2.2\JsDesenvolvimento.Data.dll</HintPath>
+      <HintPath>..\..\..\..\JsDesenvolvimento.Data\JsDesenvolvimento.Data\bin\Debug\netcoreapp2.2\JsDesenvolvimento.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
 

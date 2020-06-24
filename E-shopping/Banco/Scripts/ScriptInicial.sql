@@ -149,4 +149,20 @@ create table compra(
 	foreign key (idloja,idpropietario) references loja(idloja,idpropietario)
 );
 
+create table pessoa_endereco(
+	idpessoa integer not null,
+	id integer not null,
+	rua varchar(100) not null,
+    bairro varchar(50) not null,
+	cidade varchar(50) not null,
+    uf varchar(2) not null,
+    cep varchar(8) not null,
+    numero varchar(6),
+    complemento varchar(50),
+    telefone varchar(9) not null,
+    ddd varchar(2) not null,    
+	primary key (idpessoa, id),
+	foreign key (idpessoa) references pessoa(idpessoa)  
+);
+
 

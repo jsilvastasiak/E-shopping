@@ -7,6 +7,7 @@ import Cart from './views/Cart.vue';
 import Checkout from './views/Checkout.vue';
 import ProductInfo from './views/ProductInfo.vue';
 import Contact from './views/Contact.vue';
+import BuyedSucess from './views/BuyedSucessful.vue';
 
 Vue.use(Router);
 
@@ -46,6 +47,11 @@ export default new Router({
             path: '/contact',
             name: "Contact",
             component: Contact
+        },
+        {
+            path: '/buyedsucessful',
+            name: "BuyedSucess",
+            component: BuyedSucess
         }
     ]
 })

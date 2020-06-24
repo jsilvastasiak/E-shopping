@@ -15,14 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="JsDesenvolvimento.Data">
-      <HintPath>..\..\..\..\JsDesenvolvimento.Data\bin\Debug\netcoreapp2.2\JsDesenvolvimento.Data.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\JsDesenvolvimento.Eshopping.Api.Authentication\JsDesenvolvimento.Eshopping.Api.Authentication.csproj" />
+    <ProjectReference Include="..\JsDesenvolvimento.Eshopping.Api.Data\JsDesenvolvimento.Eshopping.Api.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JsDesenvolvimento.Eshopping.Api.Authentication\JsDesenvolvimento.Eshopping.Api.Authentication.csproj" />
-    <ProjectReference Include="..\JsDesenvolvimento.Eshopping.Api.Data\JsDesenvolvimento.Eshopping.Api.Data.csproj" />
+    <Reference Include="JsDesenvolvimento.Data">
+      <HintPath>..\..\..\..\JsDesenvolvimento.Data\JsDesenvolvimento.Data\bin\Debug\netcoreapp2.2\JsDesenvolvimento.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

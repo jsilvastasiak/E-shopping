@@ -59,10 +59,9 @@
                                 <div class="total_area">
                                     <ul>
                                         <li>Sub Total Carrinho<span v-text='"R$ " + GetSubTotal()'></span></li>
-                                        <li>Frete<span v-text='"R$ " + costs.TaxShippingValue'></span></li>
                                         <li>Total<span v-text='"R$ " + GetTotal()'></span></li>
                                     </ul>
-                                        <a href="#" class="btn btn-default check_out" v-on:click.prevent.stop="InitBuy()">Finalizar Compra</a>
+                                        <a href="#top" class="btn btn-default check_out" v-on:click.prevent.stop="InitBuy()">Prosseguir Compra</a>
                                 </div>
                             </div>
                         </div>
@@ -142,26 +141,7 @@
                 this.cepNumber = undefined;
             },
             InitBuy(){
-                var produtos = [];
-                this.cart.GetAllItems().forEach(function(el){
-                    produtos.push({
-                        quantidade: el.Quantity,
-                        valorCompra: el.Price,
-                        idproduto: el.IdProduto
-                    });
-                });
-                var request = {
-                    Produtos: produtos,
-                    Comprador: {
-                        idpessoa: 1
-                    }
-                };
-
-                this.Post('/products/finalizarCompra', request).then(response => {
-                    if(response.compraPendente.idcompra){
-                        this.cart.ClearCar();
-                    }
-                });
+                this.$router.push("Checkout");
             }
         },
         watch:{
