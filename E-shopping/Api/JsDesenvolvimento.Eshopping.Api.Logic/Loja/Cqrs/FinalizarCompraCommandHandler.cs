@@ -24,20 +24,37 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Loja.Cqrs
 
         public Task<FinalizarCompraResponse> Handle(FinalizarCompraCommand request, CancellationToken cancellationToken)
         {
-            using (var ctx = this.DbContextFactory.NewContext())
+            using (var ctx = this.DbContextFactory.NewTransactionContext())
             {
                 try
                 {
                     var repo = ctx.AcquireRepository<ICompraRepository>();
-                    
+                    var itemRepo = ctx.AcquireRepository<ICompraItemRepository>();
+
                     var compra = repo.InsertAsync(new Data.Operacao.DBModel.Compra()
                     {
                         idpropietario = request.UserRef.Loja.Propietario,
                         idloja = request.UserRef.Loja.Loja,
                         datacompra = DateTimeOffset.UtcNow,
                         idpessoa = request.FinalizarCompraRequest.Comprador.idpessoa,
-                        situacao = "P"
+                        situacao = "P",
+                        idendereco = request.FinalizarCompraRequest.Endereco.id
                     }, cancellationToken).Result;
+
+                    foreach (var item in request.FinalizarCompraRequest.ProdutosCompra)
+                    {
+                        var itens = itemRepo.InsertAsync(new Data.Operacao.DBModel.CompraItem()
+                        {
+                            idcompra = compra.idcompra,
+                            idloja = request.UserRef.Loja.Loja,
+                            idpropietario = request.UserRef.Loja.Propietario,
+                            idproduto = item.idproduto,
+                            quantidade = item.quantidade,
+                            valorunitario = item.precounitario
+                        }, cancellationToken);
+                    }
+
+                    ctx.Commit();
 
                     return Task.FromResult<FinalizarCompraResponse>(FinalizarCompraResponse.Ok(compra));
                 }

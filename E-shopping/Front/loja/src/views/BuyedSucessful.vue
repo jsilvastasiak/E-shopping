@@ -1,9 +1,12 @@
 <template>
     <div>
         <MasterHeader />
-        <div class="col-sm-12 clearfix">
-            <p>Sua Compra foi finalizada com Sucesso. Em Breve você receberá informações no seu e-mail do andamento de entrega do seu pedido!</p>
-            <img src="../assets/compra-efetivada.png" />
+        <p>Sua Compra foi finalizada com Sucesso. Em Breve você receberá informações no seu e-mail do andamento de entrega do seu pedido!</p>
+        <div class="row">
+            <div class="col-sm-4 clearfix"></div>
+            <div class="col-sm-4 clearfix">
+                <img src="../assets/compra-efetivada.png" />
+            </div>
         </div>
     </div>
 </template>
@@ -21,6 +24,8 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="css" scoped>
+    .clearfix > img{
+        width: 100%;
+    }
 </style>

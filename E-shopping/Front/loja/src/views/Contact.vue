@@ -86,7 +86,7 @@
 			let gmap = document.createElement('script');
 			gmap.setAttribute('src', 'js/gmaps.js');
 			let contact = document.createElement('script');
-			gmap.setAttribute('src', 'js/contact.js');
+			contact.setAttribute('src', 'js/contact.js');
 			document.body.appendChild(google);
 			document.body.appendChild(gmap);
 			document.body.appendChild(contact);

@@ -53,26 +53,27 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
         }
 
         [HttpPost("finalizarCompra")]
-        public ActionResult<FinalizarCompraResponse> FinalizarCompra(CancellationToken cancellationToken)
+        public ActionResult<FinalizarCompraResponse> FinalizarCompra([FromBody] Carrinho carrinho, CancellationToken cancellationToken)
         {
             try
             {
-                Carrinho carrinho = null;
-                using (var reader = new StreamReader(this.Request.Body))
-                {
-                    string json = reader.ReadToEnd();
-                    carrinho = JsonConvert.DeserializeObject<Carrinho>(json);
-                }
+                //Carrinho carrinho = null;
+                //using (var reader = new StreamReader(this.Request.Body))
+                //{
+                //    string json = reader.ReadToEnd();
+                //    carrinho = JsonConvert.DeserializeObject<Carrinho>(json);
+                //}
 
                 var produtoRequest = new FinalizarCompraRequest()
                 {
-                    ProdutosCompra = carrinho.Produtos,
-                    Comprador = carrinho.Comprador
+                    ProdutosCompra = carrinho.produtos,
+                    Comprador = carrinho.comprador,
+                    Endereco = carrinho.endereco
                 };
 
                 var query = new FinalizarCompraCommand(produtoRequest, this.UserRef);
                 var results = this.Mediator.Send(query).Result;
-                return Ok(results);
+                return Ok(results.CompraPendente);
             }
             catch (Exception ex)
             {
@@ -82,8 +83,9 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
 
         public class Carrinho
         {
-            public IList<ProdutoCompradoDto> Produtos { get; set; }
-            public Pessoa Comprador { get; set; }
+            public PessoaEndereco endereco { get; set; }
+            public IList<ProdutoCompradoDto> produtos { get; set; }
+            public Pessoa comprador { get; set; }
         }
     }
 }

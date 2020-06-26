@@ -139,18 +139,6 @@ create table pessoa(
     constraint cnpjpessoa_notnull check (tipoInscricao <> 'J' OR cnpj is not null)    
 );
 
-create table compra(
-	idcompra integer not null default nextval('compra_idcompra_seq'),
-	idloja integer not null,
-	idpropietario integer not null,
-	idpessoa integer not null,
-	situacao sit_compra,
-	dataCompra date not null,
-	primary key (idcompra),
-	foreign key (idpessoa) references pessoa(idpessoa),
-	foreign key (idloja,idpropietario) references loja(idloja,idpropietario)
-);
-
 create table pessoa_endereco(
 	idpessoa integer not null,
 	id integer not null,
@@ -167,4 +155,17 @@ create table pessoa_endereco(
 	foreign key (idpessoa) references pessoa(idpessoa)  
 );
 
+create table compra(
+	idcompra integer not null default nextval('compra_idcompra_seq'),
+	idloja integer not null,
+	idpropietario integer not null,
+	idpessoa integer not null,
+	situacao sit_compra,
+	dataCompra date not null,
+	idendereco integer not null,
+	primary key (idcompra),
+	foreign key (idpessoa) references pessoa(idpessoa),
+	foreign key (idloja,idpropietario) references loja(idloja,idpropietario),
+	foreign key (idendereco, idpessoa) references pessoa_endereco(id,idpessoa)
+);
 

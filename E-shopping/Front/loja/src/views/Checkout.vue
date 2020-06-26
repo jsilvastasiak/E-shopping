@@ -178,7 +178,7 @@
                             <li>Frete<span v-text='"R$ " + costs.TaxShippingValue'></span></li>
                             <li>Total<span v-text='"R$ " + GetTotal()'></span></li>
                         </ul>
-                            <a href="#" class="btn btn-default check_out" v-on:click.prevent.stop="InitBuy()">Prosseguir Compra</a>
+                            <a href="#" class="btn btn-default check_out" v-on:click.prevent.stop="FinalizarCompra()">Prosseguir Compra</a>
                     </div>
                 </div>
                 <div class="col-sm-1"></div>
@@ -249,19 +249,20 @@
                 this.cart.GetAllItems().forEach(function(el){
                     produtos.push({
                         quantidade: el.Quantity,
-                        valorCompra: el.Price,
+                        valorCompra: el.Price * el.Quantity,
+                        precounitario: el.Price,
                         idproduto: el.IdProduto
                     });
                 });
                 var request = {
-                    Produtos: produtos,
-                    Comprador: this.usuariologado,
-                    Endereco: this.enderecoSelecionado
+                    produtos: produtos,
+                    comprador: this.usuariologado,
+                    endereco: this.enderecoSelecionado
                 };
                 this.Post('/products/finalizarCompra', request).then(response => {
-                    if(response.compraPendente.idcompra){
+                    if(response.idcompra){
                         this.cart.ClearCar();
-                        this.$router.push('blog');
+                        this.$router.push('buyedsucessful');
                     }
                 });
             },

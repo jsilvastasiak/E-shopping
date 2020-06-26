@@ -15,5 +15,6 @@ namespace JsDesenvolvimento.Eshopping.Api.Data.Operacao.DBModel
         public int? idpessoa { get; set; }
         public DateTimeOffset datacompra { get; set; }
         public string situacao { get; set; }
+        public int idendereco { get; set; }
     }
 }

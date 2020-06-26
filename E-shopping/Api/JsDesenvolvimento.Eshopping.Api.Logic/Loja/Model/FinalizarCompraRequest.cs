@@ -9,5 +9,6 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Loja.Model
     {
         public IList<ProdutoCompradoDto> ProdutosCompra { get; set; }
         public Data.Pessoa.DBModel.Pessoa Comprador { get; set; }
+        public Data.Pessoa.DBModel.PessoaEndereco Endereco { get; set; }
     }
 }
