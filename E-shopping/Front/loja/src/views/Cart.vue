@@ -61,7 +61,7 @@
                                         <li>Sub Total Carrinho<span v-text='"R$ " + GetSubTotal()'></span></li>
                                         <li>Total<span v-text='"R$ " + GetTotal()'></span></li>
                                     </ul>
-                                        <a href="#top" class="btn btn-default check_out" v-on:click.prevent.stop="InitBuy()">Prosseguir Compra</a>
+                                        <a href="#" class="btn btn-default check_out" v-on:click.prevent.stop="InitBuy()">Prosseguir Compra</a>
                                 </div>
                             </div>
                         </div>

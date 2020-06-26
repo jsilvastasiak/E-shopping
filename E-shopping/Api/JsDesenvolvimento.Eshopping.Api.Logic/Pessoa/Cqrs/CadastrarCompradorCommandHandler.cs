@@ -33,7 +33,9 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Cqrs
                         cnpj = request.Pessoa.cnpj,
                         cpf = request.Pessoa.cpf,
                         nome = request.Pessoa.nome,
-                        tipopessoa = request.Pessoa.tipopessoa
+                        tipoinscricao = !string.IsNullOrEmpty(request.Pessoa.cpf) ? "F" : "J",
+                        email = request.Pessoa.email,
+                        senha = request.Pessoa.senha,                        
                     }, cancellationToken).Result;
 
                     return Task.FromResult(new CadastrarCompradorCommandResponse()

@@ -8,6 +8,8 @@ import Checkout from './views/Checkout.vue';
 import ProductInfo from './views/ProductInfo.vue';
 import Contact from './views/Contact.vue';
 import BuyedSucess from './views/BuyedSucessful.vue';
+import Register from './views/Register.vue';
+import Logout from './views/Logout.vue';
 
 Vue.use(Router);
 
@@ -22,6 +24,11 @@ export default new Router({
             path: '/login',
             name: "Login",
             component: Login
+        },
+        {
+            path: '/logout',
+            name: "Logout",
+            component: Logout
         },
         {
             path: '/cart',
@@ -52,6 +59,11 @@ export default new Router({
             path: '/buyedsucessful',
             name: "BuyedSucess",
             component: BuyedSucess
+        },
+        {
+            path: '/register',
+            name: "Register",
+            component: Register
         }
     ]
 })

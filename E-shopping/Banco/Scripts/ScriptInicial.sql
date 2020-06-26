@@ -130,6 +130,8 @@ create table pessoa(
 	cpf varchar(11),
     cnpj varchar(15),
 	nome varchar(100) not null,
+	email varchar(50) not null,
+	senha varchar(50),
 	primary key (idpessoa),
 	constraint cpfpessoa_unico unique (tipoInscricao, cpf),
     constraint cnpjpessoa_unico unique (tipoInscricao, cnpj),

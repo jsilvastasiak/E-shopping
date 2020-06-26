@@ -11,7 +11,7 @@
 
         <div class="register-req" v-show="!logado">
             <p>Você ainda não possui uma conta com as informações necessárias para finalizar a compra. Por favor faça Login ou cadastra-se. É rápido!</p>
-            <a class="btn btn-primary" href="">Fazer Login</a>
+            <a class="btn btn-primary" href="#top" v-on:click.prevent.stop="IrParaLogin()">Fazer Login</a>
         </div><!--/register-req-->
 
         <div class="shopper-informations">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-group" id="accordian999"><!--category-productsr-->
+            <div class="panel-group" id="accordian999" v-show="logado"><!--category-productsr-->
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -102,7 +102,6 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-1 clearfix">
-                                    
                                 </div>
                                 <div class="col-sm-5 clearfix">
                                     <div class="bill-to">
@@ -194,7 +193,7 @@
     import Client from '../components/ApiClient.vue';
 
     export default {
-        inject: ['api','cart'],
+        inject: ['api','cart','usuario'],
         mixins: [Client],
         components:{
             MasterHeader,
@@ -206,7 +205,7 @@
                     TaxShippingValue: 0
                 },
                 logado: false,
-                usuario: {},
+                usuariologado: {},
                 enderecos: [],
                 enderecoSelecionado: {},
                 novoendereco: {}
@@ -215,7 +214,7 @@
         methods:{
             AddEndereco(endereco){
                 if(this.logado){
-                    endereco.idpessoa = this.usuario.idpessoa;
+                    endereco.idpessoa = this.usuariologado.idpessoa;
                     this.Post('/buyers/cadastrarEndereco', endereco).then(response => {
                         if(response.idpessoa){
                             this.BuscarEnderecos();
@@ -236,7 +235,7 @@
             },
             BuscarEnderecos(){
                 if(this.logado){
-                    var url = '/buyers/' + this.usuario.idpessoa + '/address';
+                    var url = '/buyers/' + this.usuariologado.idpessoa + '/address';
                     this.Get(url).then(response => {
                         this.enderecos = response;
                         this.enderecos.forEach(function(el){
@@ -256,7 +255,7 @@
                 });
                 var request = {
                     Produtos: produtos,
-                    Comprador: this.usuario,
+                    Comprador: this.usuariologado,
                     Endereco: this.enderecoSelecionado
                 };
                 this.Post('/products/finalizarCompra', request).then(response => {
@@ -278,12 +277,13 @@
             GetTotal(){
                 return this.GetSubTotal() + this.costs.TaxShippingValue;
             },
+            IrParaLogin(){
+                this.$router.push("Login");
+            }
         },
         created(){
-            this.usuario = {
-                idpessoa: 1
-            };
-            this.logado = true;
+            this.logado = this.usuario.Current().idpessoa != null;
+            this.usuariologado = this.usuario.Current();
             this.BuscarEnderecos();
         }
     }

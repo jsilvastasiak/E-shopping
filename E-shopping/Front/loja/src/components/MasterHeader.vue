@@ -76,16 +76,6 @@
             <div class="shop-menu clearfix pull-right">
               <ul class="nav navbar-nav">
                 <li>
-                  <a href="#/login">
-                    <i class="fa fa-user"></i> Entrar
-                  </a>
-                </li>
-                <li>
-                  <a href>
-                    <i class="fa fa-star"></i> Desejos
-                  </a>
-                </li>
-                <li>
                   <a href="#/checkout">
                     <i class="fa fa-crosshairs"></i> Checkout
                   </a>
@@ -95,9 +85,14 @@
                     <i class="fa fa-shopping-cart"></i> Carrinho
                   </a>
                 </li>
-                <li>
+                <li v-show="!Logado">
                   <a href="#/login">
-                    <i class="fa fa-lock"></i> Login
+                    <i class="fa fa-user"></i> Entrar
+                  </a>
+                </li>
+                <li v-show="Logado">
+                  <a href="#/logout">
+                    <i class="fa fa-lock"></i> Logout
                   </a>
                 </li>
               </ul>
@@ -129,7 +124,7 @@
             <div class="mainmenu pull-left">
               <ul class="nav navbar-nav collapse navbar-collapse">
                 <li>
-                  <a href="index.html" class="active">Home</a>
+                  <a href="/" class="active">Home</a>
                 </li>
                 <li class="dropdown">
                   <a href="#">
@@ -138,13 +133,7 @@
                   </a>
                   <ul role="menu" class="sub-menu">
                     <li>
-                      <a href="#/shop">Artigos</a>
-                    </li>
-                    <li>
                       <a href="#/cart">Carrinho</a>
-                    </li>
-                    <li>
-                      <a href="#/login">Login</a>
                     </li>
                   </ul>
                 </li>
@@ -154,10 +143,7 @@
               </ul>
             </div>
           </div>
-          <div class="col-sm-3">
-            <div class="search_box pull-right">
-              <input type="text" placeholder="Search" />
-            </div>
+          <div class="col-sm-3">            
           </div>
         </div>
       </div>
@@ -169,6 +155,7 @@
 
 <script>
 export default {
+  inject: ['usuario'],
   name: "MasterHeader",
   props: {
     msg: String
@@ -178,13 +165,17 @@ export default {
       CurrentCompany: {
         mailAdress: "jstasiak@gmail.com",
         fone: "(47) 9975-9323"
-      }
+      },
+      Logado: false
     };
   },
   methods: {
     ShowMessage: function() {
       return alert("Funciona!");
     }
+  },
+  created(){
+    this.Logado = this.usuario.Current().idpessoa != null;
   }
 };
 </script>

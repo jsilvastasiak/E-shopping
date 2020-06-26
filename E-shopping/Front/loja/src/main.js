@@ -52,6 +52,34 @@ Cart.prototype = {
     }
 }
 
+var Usuario = function(){
+  this.usuario = {};
+  if(localStorage.getItem("Usuario_shoopper")){
+    try {
+      this.usuario = JSON.parse(localStorage.getItem("Usuario_shoopper"));
+    } catch (error) {
+      localStorage.removeItem("Usuario_shoopper");
+    }
+  }
+}
+Usuario.prototype = {
+  Logout: function(){
+    this.usuario = {};
+    this._saveStorage();
+  },
+  Current: function(){
+    return this.usuario;
+  },
+  SetUsuario: function(pessoa, email){
+    this.usuario = { idpessoa: pessoa, email:  email};
+    this._saveStorage();
+  },
+  _saveStorage: function(){
+      const parsed = JSON.stringify(this.usuario);
+      localStorage.setItem('Usuario_shoopper', parsed);
+  }
+}
+
 new Vue({
   provide:{
     api: {
@@ -60,7 +88,8 @@ new Vue({
       sas: "sv=2019-10-10&ss=f&srt=so&sp=r&se=2030-12-08T01:55:22Z&st=2020-06-07T17:55:20Z&spr=https&sig=2wXkaOVYZuupXS3H65kp8kg9bWFyRxTQFbghEXsgSGk%3D",
       token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik1hcmxlaSIsInByb3BpZXRhcmlvIjoiMyIsImxvamEiOiIxIiwibmJmIjoxNTkyODcyOTc4LCJleHAiOjE1OTM0Nzc3NzgsImlhdCI6MTU5Mjg3Mjk3OH0.1UBmQhaJ3XR_k7aLoLhxLYX1FlFzTBt96KdhNZEKXzk"
     },
-    cart: new Cart()
+    cart: new Cart(),
+    usuario: new Usuario()
   },
   router: Router,
   render: h => h(App),
