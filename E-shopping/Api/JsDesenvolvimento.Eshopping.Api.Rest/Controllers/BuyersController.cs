@@ -99,5 +99,20 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
                 return BadRequest(new { Mensagem = ex.Message });
             }
         }
+
+        [HttpPost("buscarCompras")]
+        public ActionResult<PessoaEndereco> buscarCompras([FromBody] Pessoa buyer, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var query = new GetComprasPessoaQuery(buyer, this.UserRef);
+                var results = this.Mediator.Send(query).Result;
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
     }
 }

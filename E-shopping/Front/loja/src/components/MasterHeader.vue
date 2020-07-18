@@ -74,7 +74,7 @@
           </div>
           <div class="col-md-8 clearfix">
             <div class="shop-menu clearfix pull-right">
-              <ul class="nav navbar-nav">
+              <ul class="nav navbar-nav collapse navbar-collapse">
                 <li>
                   <a href="#/checkout">
                     <i class="fa fa-crosshairs"></i> Checkout
@@ -85,15 +85,28 @@
                     <i class="fa fa-shopping-cart"></i> Carrinho
                   </a>
                 </li>
+                <li v-show="Logado">
+                  <a href="#/compras">
+                    Compras
+                  </a>
+                </li>
                 <li v-show="!Logado">
                   <a href="#/login">
                     <i class="fa fa-user"></i> Entrar
                   </a>
                 </li>
-                <li v-show="Logado">
-                  <a href="#/logout">
-                    <i class="fa fa-lock"></i> Logout
+                <li class="dropdown" v-show="Logado">
+                  <a href="#">
+                    {{this.Usuario.email}}
+                    <i class="fa fa-angle-down"></i>
                   </a>
+                  <ul role="menu" class="sub-menu">
+                    <li>
+                      <a href="#/logout">
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </div>
@@ -166,7 +179,8 @@ export default {
         mailAdress: "jstasiak@gmail.com",
         fone: "(47) 9975-9323"
       },
-      Logado: false
+      Logado: false,
+      Usuario: {}
     };
   },
   methods: {
@@ -176,6 +190,21 @@ export default {
   },
   created(){
     this.Logado = this.usuario.Current().idpessoa != null;
+    this.Usuario = this.usuario.Current();
   }
 };
 </script>
+<style scoped>
+  .navbar-nav li ul.sub-menu li a:hover{
+    color: #ffffff;
+  }
+  .navbar-nav li ul.sub-menu li a:hover{
+    color: #ffffff;
+  }
+  .shop-menu ul li a:hover{
+    background-color: initial !important
+  }
+  .shop-menu ul li a{
+    background-color: initial !important
+  }
+</style>

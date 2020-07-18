@@ -169,3 +169,16 @@ create table compra(
 	foreign key (idendereco, idpessoa) references pessoa_endereco(id,idpessoa)
 );
 
+create table compra_item(
+	id integer not null,
+	idcompra integer not null,
+	idproduto integer not null,
+	idloja integer not null,
+	idpropietario integer not null,
+	quantidade integer not null,
+	valorunitario decimal(17,2) not null,
+	primary key (id,idcompra),
+	foreign key (idcompra) references compra(idcompra),
+	foreign key (idloja,idpropietario,idproduto) references produto(idloja,idpropietario,idproduto),
+);
+

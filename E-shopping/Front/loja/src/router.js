@@ -10,6 +10,7 @@ import Contact from './views/Contact.vue';
 import BuyedSucess from './views/BuyedSucessful.vue';
 import Register from './views/Register.vue';
 import Logout from './views/Logout.vue';
+import Compras from './views/Compras.vue';
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
             path: '/register',
             name: "Register",
             component: Register
+        },
+        {
+            path: '/compras',
+            name: "Compras",
+            component: Compras
         }
     ]
 })
