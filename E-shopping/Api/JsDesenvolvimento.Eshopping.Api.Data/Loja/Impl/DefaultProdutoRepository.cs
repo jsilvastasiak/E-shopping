@@ -61,6 +61,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Data.Loja.Impl
                                         precounitario,
                                         datacadastro,
                                         situacao,
+                                        marca,
                                         (SELECT ima.caminhodiretorio
                                            FROM produto_imagem ima
                                           WHERE ima.idproduto = produto.idproduto

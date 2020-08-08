@@ -12,7 +12,7 @@
                                     <div class="productinfo text-center">
                                         <img :src="produto.imagem" alt="" />
                                         <h2 v-text="'R$' + produto.precounitario"></h2>
-                                        <p v-text="produto.nome"></p>
+                                        <p v-text="produto.nome" v-on:click.prevent.stop="NavegarProduto(produto)"></p>
                                         <a href="#" class="btn btn-default add-to-cart" v-on:click.prevent.stop="AddItem(produto)"><i class="fa fa-shopping-cart"></i>Adicionar</a>
                                     </div>
                                 </div>
@@ -26,7 +26,7 @@
                                     <div class="productinfo text-center">
                                         <img :src="produto.imagem" alt="" />
                                         <h2 v-text="'R$' + produto.precounitario"></h2>
-                                        <p v-text="produto.nome"></p>
+                                        <p v-text="produto.nome" v-on:click.prevent.stop="NavegarProduto(produto)"></p>
                                         <a href="#" class="btn btn-default add-to-cart" v-on:click.prevent.stop="AddItem(produto)"><i class="fa fa-shopping-cart"></i>Adicionar</a>
                                     </div>
                                 </div>
@@ -86,6 +86,9 @@
                 newItem.Quantity = 1;
 
                 this.cart.AddToCart(newItem);
+            },
+            NavegarProduto(item){
+                this.$router.push("/productinfo/" + item.idproduto);
             }
         },
         created(){

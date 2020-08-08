@@ -52,18 +52,51 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Produto> GetById([FromRoute]int id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var produtoRequest = new ProdutoDto()
+                {
+                    idproduto = id
+                };
+
+                var query = new GetProdutoByIdQuery(produtoRequest, this.UserRef);
+                var results = this.Mediator.Send(query).Result;
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
+
+        [HttpGet("{id}/imagens")]
+        public ActionResult<Produto> GetImagens([FromRoute]int id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var imagemRequest = new ImagemProduto()
+                {
+                    idproduto = id
+                };
+
+                var query = new GetProdutoImagensQuery(imagemRequest, this.UserRef);
+                var results = this.Mediator.Send(query).Result;
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Mensagem = ex.Message });
+            }
+        }
+
         [HttpPost("finalizarCompra")]
         public ActionResult<FinalizarCompraResponse> FinalizarCompra([FromBody] Carrinho carrinho, CancellationToken cancellationToken)
         {
             try
             {
-                //Carrinho carrinho = null;
-                //using (var reader = new StreamReader(this.Request.Body))
-                //{
-                //    string json = reader.ReadToEnd();
-                //    carrinho = JsonConvert.DeserializeObject<Carrinho>(json);
-                //}
-
                 var produtoRequest = new FinalizarCompraRequest()
                 {
                     ProdutosCompra = carrinho.produtos,

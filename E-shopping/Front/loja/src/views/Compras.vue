@@ -26,11 +26,11 @@
                                     <img :src="item.imagem" alt="">
                                 </div>
                                 <div class="col-sm-3 clearfix">
-                                    <h4><a href="#/productinfo">{{item.nome}}</a></h4>
+                                    <h4><a v-bind:href='"#/productinfo/" + item.idproduto'>{{item.nome}}</a></h4>
                                     <p v-text="'R$ '+ item.valorunitario + ' x ' + item.quantidade + ' unidade'"></p>
                                 </div>
                                 <div class="col-sm-8 clearfix compra-detalhe">
-                                    <a href="#/comprainfo" v-on:click.prevent.stop="">Ver detalhes</a>
+                                    <a v-bind:href='"#/productinfo/" + item.idproduto'>Ver detalhes</a>
                                 </div>
                             </div>
                         </div>   

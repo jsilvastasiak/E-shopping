@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Category</h2>
+        <h2>Categorias</h2>
         <div class="panel-group category-products" id="accordian"><!--category-productsr-->
             <div class="panel panel-default" v-for="(category,index) in Categorys" :key="index">
                 <div class="panel-heading">

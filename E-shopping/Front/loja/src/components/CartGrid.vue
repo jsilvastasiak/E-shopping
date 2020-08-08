@@ -15,10 +15,10 @@
                 <tbody>
                     <tr v-for="(item, index) in CartItems" :key="index">
                         <td class="cart_product">
-                            <a href="#/productinfo"><img :src="item.Image" alt=""></a>
+                            <a v-bind:href='"#/productinfo/" + item.IdProduto'><img :src="item.Image" alt=""></a>
                         </td>
                         <td class="cart_description">
-                            <h4><a href="#/productinfo">{{item.Name}}</a></h4>
+                            <h4><a v-bind:href='"#/productinfo/" + item.IdProduto'>{{item.Name}}</a></h4>
                             <p v-text="'Web ID: '+ item.Id"></p>
                         </td>
                         <td class="cart_price">

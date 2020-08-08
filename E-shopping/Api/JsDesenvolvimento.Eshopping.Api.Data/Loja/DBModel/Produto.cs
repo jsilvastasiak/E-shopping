@@ -20,5 +20,6 @@ namespace JsDesenvolvimento.Eshopping.Api.Data.Loja.DBModel
         public decimal precounitario { get; set; }
         public DateTime datacadastro { get; set; }
         public string situacao { get; set; }
+        public string marca { get; set; }
     }
 }

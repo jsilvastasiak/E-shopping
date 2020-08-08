@@ -85,6 +85,7 @@ create table produto(
 	precoUnitario decimal(17,2) not null,
 	datacadastro date not null,
 	situacao sit_registro,
+	marca varchar(25),
 	primary key (idproduto,idloja,idpropietario),
 	foreign key (idloja,idpropietario) references loja(idloja,idpropietario),
 	foreign key (idloja,idpropietario,idcategoria) references categoria(idloja,idpropietario,idcategoria)
