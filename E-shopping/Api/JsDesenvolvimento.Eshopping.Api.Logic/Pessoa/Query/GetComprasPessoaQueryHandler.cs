@@ -3,9 +3,11 @@ using JsDesenvolvimento.Data;
 using JsDesenvolvimento.Eshopping.Api.Data.Operacao;
 using JsDesenvolvimento.Eshopping.Api.Data.Operacao.DBModel;
 using JsDesenvolvimento.Eshopping.Api.Data.Operacao.Model;
+using JsDesenvolvimento.Eshopping.Api.Logic.Loja.Model;
 using JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Model;
 using MediatR;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Query
 {
-    public class GetComprasPessoaQueryHandler : IRequestHandler<GetComprasPessoaQuery, IList<CompraPessoa>>
+    public class GetComprasPessoaQueryHandler : IRequestHandler<GetComprasPessoaQuery, IList<CompraPessoaLote>>
     {
         private IDbConnectionFactory DbConnectionFactory { get; set; }
         private IDbContextFactory DbContextFactory { get; set; }
@@ -24,7 +26,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Query
             this.DbContextFactory = contextFactory;
         }
 
-        public Task<IList<CompraPessoa>> Handle(GetComprasPessoaQuery request, CancellationToken cancellationToken)
+        public Task<IList<CompraPessoaLote>> Handle(GetComprasPessoaQuery request, CancellationToken cancellationToken)
         {
             using (var ctx = this.DbContextFactory.NewContext())
             {
@@ -36,7 +38,19 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Query
                     idloja = request.UserRef.Loja.Loja
                 }, cancellationToken).Result;
 
-                return Task.FromResult(compras);
+                var loteCompra = compras.GroupBy(a => a.idcompra).Select(a => a.Key);
+                IList<CompraPessoaLote> lotePessoa = new List<CompraPessoaLote>();
+                foreach (var loteId in loteCompra)
+                {
+                    lotePessoa.Add(new CompraPessoaLote()
+                    {
+                        itens = compras.Where(a => a.idcompra == loteId).Select(a => a).ToList(),
+                        datacompra = compras.First().datacompra,
+                        sitcompra = compras.First().sitcompra
+                    });
+                }
+
+                return Task.FromResult(lotePessoa);
             }
         }
     }

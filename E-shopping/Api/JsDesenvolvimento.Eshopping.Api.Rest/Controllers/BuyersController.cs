@@ -1,5 +1,6 @@
 ﻿using JsDesenvolvimento.Eshopping.Api.Authentication;
 using JsDesenvolvimento.Eshopping.Api.Data.Pessoa.DBModel;
+using JsDesenvolvimento.Eshopping.Api.Logic.Loja.Model;
 using JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Cqrs;
 using JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Query;
 using MediatR;
@@ -101,7 +102,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Rest.Controllers
         }
 
         [HttpPost("buscarCompras")]
-        public ActionResult<PessoaEndereco> buscarCompras([FromBody] Pessoa buyer, CancellationToken cancellationToken)
+        public ActionResult<IList<CompraPessoaLote>> buscarCompras([FromBody] Pessoa buyer, CancellationToken cancellationToken)
         {
             try
             {
