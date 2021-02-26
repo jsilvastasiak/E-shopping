@@ -23,6 +23,12 @@
     <Reference Include="JsDesenvolvimento.Data">
       <HintPath>..\..\..\..\JsDesenvolvimento.Data\JsDesenvolvimento.Data\bin\Debug\netcoreapp2.2\JsDesenvolvimento.Data.dll</HintPath>
     </Reference>
+    <Reference Include="JsDesenvolvimento.Pagamento">
+      <HintPath>..\..\..\..\JsDesenvolvimento.Pagamento\JsDesenvolvimento.Pagamento\bin\Debug\netstandard2.0\JsDesenvolvimento.Pagamento.dll</HintPath>
+    </Reference>
+    <Reference Include="JsDesenvolvimento.Pagamento.Pagseguro.Client">
+      <HintPath>..\..\..\..\JsDesenvolvimento.Pagamento\JsDesenvolvimento.Pagamento.Pagseguro.Client\bin\Debug\netcoreapp2.2\JsDesenvolvimento.Pagamento.Pagseguro.Client.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
