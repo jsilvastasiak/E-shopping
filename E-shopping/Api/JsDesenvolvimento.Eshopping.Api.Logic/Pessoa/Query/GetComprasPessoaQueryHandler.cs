@@ -45,8 +45,8 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Pessoa.Query
                     lotePessoa.Add(new CompraPessoaLote()
                     {
                         itens = compras.Where(a => a.idcompra == loteId).Select(a => a).ToList(),
-                        datacompra = compras.First().datacompra,
-                        sitcompra = compras.First().sitcompra
+                        datacompra = compras.Where(a => a.idcompra == loteId).First().datacompra,
+                        sitcompra = compras.Where(a => a.idcompra == loteId).First().sitcompra
                     });
                 }
 
