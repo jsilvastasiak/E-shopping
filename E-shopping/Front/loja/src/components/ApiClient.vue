@@ -13,7 +13,6 @@
             },
             Get(url){
                 var headers = this._getHeaders();
-                console.log(headers);
                 var resultadoJson = this.$http.get(this.api.baseUrl + url, {"headers" : headers})
                 .then(response => response.json());
 
