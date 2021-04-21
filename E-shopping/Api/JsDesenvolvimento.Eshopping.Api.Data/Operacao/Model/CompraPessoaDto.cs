@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JsDesenvolvimento.Eshopping.Api.Data.Operacao.Model
 {
-    public class CompraPessoa : CompraItem
+    public class CompraPessoaDto : CompraItem
     {
         public int idpessoa { get; set; }
         public string nome { get; set; }

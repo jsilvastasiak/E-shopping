@@ -86,7 +86,7 @@ new Vue({
       baseUrl: "https://localhost:44372/api",
       diretorioImagens: "https://cs2496c7b05ef5fx4459xb88.file.core.windows.net/eshopping",
       sas: "sv=2019-10-10&ss=f&srt=so&sp=r&se=2030-12-08T01:55:22Z&st=2020-06-07T17:55:20Z&spr=https&sig=2wXkaOVYZuupXS3H65kp8kg9bWFyRxTQFbghEXsgSGk%3D",
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik1hcmxlaSIsInByb3BpZXRhcmlvIjoiMyIsImxvamEiOiIxIiwibmJmIjoxNTk2ODU4ODEwLCJleHAiOjE1OTc0NjM2MTAsImlhdCI6MTU5Njg1ODgxMH0.ecQsXSQzTtRcJmur_niM0_vozUCz-xhRoabK_hq19dY"
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik1hcmxlaSIsInByb3BpZXRhcmlvIjoiMyIsImxvamEiOiIxIiwibmJmIjoxNjE2NDg4OTMyLCJleHAiOjE2MTcwOTM3MzIsImlhdCI6MTYxNjQ4ODkzMn0.qEsPI7SdGMydSIzLu9M5Ew1uJkMza79p68GfI2mJ5yw"
     },
     cart: new Cart(),
     usuario: new Usuario()

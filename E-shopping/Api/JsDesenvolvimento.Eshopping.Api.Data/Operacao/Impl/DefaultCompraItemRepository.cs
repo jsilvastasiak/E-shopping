@@ -13,29 +13,29 @@ namespace JsDesenvolvimento.Eshopping.Api.Data.Operacao.Impl
 {
     public class DefaultCompraItemRepository : AbstractDefaultRepository<DBModel.CompraItem>, ICompraItemRepository
     {
-        public Task<IList<CompraPessoa>> GetComprasPessoa(Operacao.DBModel.Compra compra, CancellationToken cancellationToken)
+        public Task<IList<CompraPessoaDto>> GetComprasPessoa(Operacao.DBModel.Compra compra, CancellationToken cancellationToken)
         {
-            return Task.Factory.StartNew<IList<CompraPessoa>>(() =>
+            return Task.Factory.StartNew<IList<CompraPessoaDto>>(() =>
             {
-                string sql = $@"select cmp.idpessoa {nameof(CompraPessoa.idpessoa)}
-		                                ,item.idcompra {nameof(CompraPessoa.idcompra)}
-		                                ,prd.idproduto {nameof(CompraPessoa.idproduto)}
-		                                ,item.quantidade {nameof(CompraPessoa.quantidade)}
-		                                ,item.valorunitario {nameof(CompraPessoa.valorunitario)}
-		                                ,prd.nome {nameof(CompraPessoa.nome)}
-                                        ,prd.descricao {nameof(CompraPessoa.descricao)}
-                                        ,cmp.datacompra {nameof(CompraPessoa.datacompra)}
+                string sql = $@"select cmp.idpessoa {nameof(CompraPessoaDto.idpessoa)}
+		                                ,item.idcompra {nameof(CompraPessoaDto.idcompra)}
+		                                ,prd.idproduto {nameof(CompraPessoaDto.idproduto)}
+		                                ,item.quantidade {nameof(CompraPessoaDto.quantidade)}
+		                                ,item.valorunitario {nameof(CompraPessoaDto.valorunitario)}
+		                                ,prd.nome {nameof(CompraPessoaDto.nome)}
+                                        ,prd.descricao {nameof(CompraPessoaDto.descricao)}
+                                        ,cmp.datacompra {nameof(CompraPessoaDto.datacompra)}
                                         , (SELECT img.caminhodiretorio
          	                                FROM produto_imagem img
                                            WHERE img.idproduto = prd.idproduto
                                              AND img.idloja = prd.idloja
                                              AND img.idpropietario = prd.idpropietario
          	                                 AND img.imagemprincipal = 'S'
-                                             AND img.situacao = 'A') {nameof(CompraPessoa.imagem)}
+                                             AND img.situacao = 'A') {nameof(CompraPessoaDto.imagem)}
                                         ,CASE WHEN cmp.situacao = 'P' THEN 'Aguardando Pagamento'
                                         WHEN cmp.situacao = 'C' THEN 'Confirmado'
                                         WHEN cmp.situacao = 'F' THEN 'Saiu para Entrega'
-                                        ELSE '' END {nameof(CompraPessoa.sitcompra)}
+                                        ELSE '' END {nameof(CompraPessoaDto.sitcompra)}
                                   from compra_item item
                                   join compra cmp
                                     on cmp.idcompra = item.idcompra
@@ -50,7 +50,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Data.Operacao.Impl
                                    and cmp.idloja = :prm_idloja
                                    and cmp.situacao IN ('P','C')";
                 
-                return this.AttachedContext.InnerConnection.Query<CompraPessoa>(sql,
+                return this.AttachedContext.InnerConnection.Query<CompraPessoaDto>(sql,
                                                                     param: new
                                                                     {
                                                                         prm_idpessoa = compra.idpessoa,

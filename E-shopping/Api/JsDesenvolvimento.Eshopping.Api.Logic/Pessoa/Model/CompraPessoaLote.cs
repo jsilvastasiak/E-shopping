@@ -7,7 +7,7 @@ namespace JsDesenvolvimento.Eshopping.Api.Logic.Loja.Model
 {
     public class CompraPessoaLote
     {
-        public IList<CompraPessoa> itens { get; set; }
+        public IList<CompraPessoaDto> itens { get; set; }
         public string sitcompra { get; set; }
         public DateTimeOffset datacompra { get; set; }
     }

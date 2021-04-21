@@ -10,6 +10,6 @@ namespace JsDesenvolvimento.Eshopping.Api.Data.Operacao
 {
     public interface ICompraItemRepository: IDefaultRepository<DBModel.CompraItem>
     {
-        Task<IList<CompraPessoa>> GetComprasPessoa(Operacao.DBModel.Compra compra, CancellationToken cancellationToken);
+        Task<IList<CompraPessoaDto>> GetComprasPessoa(Operacao.DBModel.Compra compra, CancellationToken cancellationToken);
     }
 }
