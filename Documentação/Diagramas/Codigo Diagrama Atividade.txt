@@ -1,0 +1,24 @@
+@startuml
+(*) --> "Escolher Produtos"
+"Escolher Produtos" --> "Ver Carrinho"
+"Ver Carrinho" --> "Comprar"
+if "Está Logado?" then
+  --> [Sim] "Fazer Checkout"
+else
+  --> [Não] if "Tem Cadastro?" then
+    --> [Sim] "Fazer Login"
+  else
+    --> [Não] "Realizar Cadastro"
+    --> "Fazer Login"
+    --> "Fazer Checkout"
+  endif
+endif
+if "Tem Endereço?" then
+  --> [Sim] "Escolher Endereço Entrega"
+else
+  --> [Não] "Cadastrar Endereço"
+  --> "Escolher Endereço Entrega"
+endif
+"Escolher Endereço Entrega" --> "Finalizar Compra" 
+"Finalizar Compra" --> (*)
+@enduml

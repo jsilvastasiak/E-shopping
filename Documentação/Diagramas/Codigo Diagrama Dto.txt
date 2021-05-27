@@ -1,0 +1,53 @@
+@startuml
+class Produto{
+  idProduto : Integer
+  idLoja : Integer
+  idProprietario : Integer
+  idCategoria : Integer
+  nome : String
+  descricao : String
+  precounitario : Decimal
+  datacadastro : DateTime
+  situacao : String
+  marca : String
+}
+
+class CompraItem{
+  id : Integer
+  idcompra : Integer
+  idproduto : Integer
+  idloja : Integer
+  idproprietario : Integer
+  quantidade : Integer
+  valorunitario : Decimal
+}
+
+class CompraPessoaDto{
+  idpessoa : Integer
+  nome : String
+  descricao : String
+  sitcompra : String
+  datacompra : DateTime
+}
+
+class CompraPessoaLoteDto{
+  itens : IList<CompraPessoaDto>
+  sitcompra : String
+  datacompra : DateTime
+}
+
+class ProdutoCompraDto{
+  quantidade : Integer
+  valorCompra : Decimal
+}
+
+class ProdutoDto{
+  imagem : String
+}
+
+Produto <|-- ProdutoCompraDto
+Produto <|-- ProdutoDto
+
+CompraItem <|-- CompraPessoaDto
+CompraPessoaDto "many" -- "1" CompraPessoaLoteDto
+@enduml

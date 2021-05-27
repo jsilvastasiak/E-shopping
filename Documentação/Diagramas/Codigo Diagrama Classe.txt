@@ -1,0 +1,33 @@
+@startuml
+interface IRepository
+interface IDbConnectionFactory 
+interface IDbContextFactory 
+
+package "Modelos de Banco"{
+  abstract class ModeloDto
+}
+
+Controller : HttpGet()
+Controller : HttpPost()
+Controller : HttpPut()
+Controller : HttpDelete()
+
+Command : ModeloDto Dados
+
+ComandHandler : IDbConnectionFactory DbConnection
+ComandHandler : IDbContextFactory DbContext
+ComandHandler : Handle(ComandHandler request)
+
+IRepository : Insert(ModeloDto object)
+IRepository : Update(ModeloDto object)
+IRepository : Fetch(ModeloDto object)
+IRepository : Delete(ModeloDto object)
+IRepository : FetchKey(ModeloDto object)
+
+IDbConnectionFactory : Begin()
+IDbConnectionFactory : BeginTransaction()
+IDbConnectionFactory : End()
+
+IDbContextFactory : NewTransactionContext(IDbConnectionFactory conn)
+IDbContextFactory : NewContext(IDbConnectionFactory conn)
+@enduml
